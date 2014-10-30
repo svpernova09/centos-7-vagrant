@@ -1,0 +1,21 @@
+---
+ip: "192.168.42.42"
+memory: 2048
+cpus: 2
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+
+folders:
+    - map: .
+      to: /home/vagrant/Code
+
+sites:
+    - map: code.dev
+      to: /home/vagrant/Code/public
+
+variables:
+    - key: APP_ENV
+      value: local
