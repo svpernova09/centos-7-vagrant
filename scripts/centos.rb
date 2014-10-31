@@ -1,11 +1,11 @@
 class Centos
   def Centos.configure(config, settings)
     # Configure The Box
-    config.vm.box = "Centos-7-x64"
+    config.vm.box = "centos-7"
     config.vm.hostname = "centos"
 
     # Configure A Private Network IP
-    config.vm.network :private_network, ip: settings["ip"] ||= "192.168.37.37"
+    config.vm.network :private_network, ip: settings["ip"] ||= "192.168.42.42"
 
     # Configure A Few VirtualBox Settings
     config.vm.provider "virtualbox" do |vb|
@@ -46,21 +46,21 @@ class Centos
     end
 
     # Install All The Configured Nginx Sites
-    settings["sites"].each do |site|
-      config.vm.provision "shell" do |s|
-          s.inline = "bash /vagrant/scripts/serve.sh $1 $2"
-          s.args = [site["map"], site["to"]]
-      end
-    end
+#    settings["sites"].each do |site|
+#      config.vm.provision "shell" do |s|
+#          s.inline = "bash /vagrant/scripts/serve.sh $1 $2"
+#          s.args = [site["map"], site["to"]]
+#      end
+#    end
 
     # Configure All Of The Server Environment Variables
-    if settings.has_key?("variables")
-      settings["variables"].each do |var|
-        config.vm.provision "shell" do |s|
-            s.inline = "echo \"\nenv[$1] = '$2'\" >> /etc/php5/fpm/php-fpm.conf && service php5-fpm restart"
-            s.args = [var["key"], var["value"]]
-        end
-      end
-    end
+#    if settings.has_key?("variables")
+#      settings["variables"].each do |var|
+#        config.vm.provision "shell" do |s|
+#            s.inline = "echo \"\nenv[$1] = '$2'\" >> /etc/php5/fpm/php-fpm.conf && service php5-fpm restart"
+#            s.args = [var["key"], var["value"]]
+#        end
+#      end
+#    end
   end
 end
